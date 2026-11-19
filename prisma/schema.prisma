@@ -1,23 +1,15 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
 enum Role {
-  PATRON
+  MEMBER
   LIBRARIAN
 }
 
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
-  name      String
-  role      Role     @default(PATRON)
-  createdAt DateTime @default(now())
+  password  String 
+  name      String?
+  role      Role     @default(MEMBER)
+
 }
 
 model Genre {
@@ -30,9 +22,8 @@ model Book {
   id            Int      @id @default(autoincrement())
   title         String
   author        String
-  publishedYear Int?
-  createdAt     DateTime @default(now())
-
-  genreId Int
-  genre   Genre @relation(fields: [genreId], references: [id])
+  isbn          String @unique
+  totalCopies   Int
+  genreId       Int
+  genre         Genre @relation(fields: [genreId], references: [id])
 }

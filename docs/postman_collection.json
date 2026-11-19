@@ -1,0 +1,100 @@
+{
+  "info": {
+    "name": "Library Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "token", "value": "" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "auth": { "type": "noauth" },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"lib@test.com\",\n  \"password\": \"secret123\",\n  \"name\": \"Librarian\",\n  \"role\": \"LIBRARIAN\"\n}" },
+            "url": "{{baseUrl}}/auth/register"
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "auth": { "type": "noauth" },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"lib@test.com\",\n  \"password\": \"secret123\"\n}" },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Genres",
+      "item": [
+        {
+          "name": "Create Genre",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Fiction\"\n}" },
+            "url": "{{baseUrl}}/genres"
+          }
+        },
+        { "name": "Get All Genres", "request": { "method": "GET", "url": "{{baseUrl}}/genres" } },
+        { "name": "Get One Genre", "request": { "method": "GET", "url": "{{baseUrl}}/genres/1" } },
+        {
+          "name": "Update Genre",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Science Fiction\"\n}" },
+            "url": "{{baseUrl}}/genres/1"
+          }
+        },
+        { "name": "Delete Genre", "request": { "method": "DELETE", "url": "{{baseUrl}}/genres/1" } }
+      ]
+    },
+    {
+      "name": "Books",
+      "item": [
+        {
+          "name": "Get All Books (filter/search/paginate)",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "noauth" },
+            "url": "{{baseUrl}}/books?genreId=1&search=harry&page=1&limit=5"
+          }
+        },
+        { "name": "Get One Book", "request": { "method": "GET", "auth": { "type": "noauth" }, "url": "{{baseUrl}}/books/1" } },
+        {
+          "name": "Create Book (LIBRARIAN)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Harry Potter\",\n  \"author\": \"J.K. Rowling\",\n  \"isbn\": \"9780747532699\",\n  \"totalCopies\": 5,\n  \"genreId\": 1\n}" },
+            "url": "{{baseUrl}}/books"
+          }
+        },
+        {
+          "name": "Update Book (LIBRARIAN)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"totalCopies\": 10\n}" },
+            "url": "{{baseUrl}}/books/1"
+          }
+        },
+        { "name": "Delete Book (LIBRARIAN)", "request": { "method": "DELETE", "url": "{{baseUrl}}/books/1" } }
+      ]
+    }
+  ]
+}
